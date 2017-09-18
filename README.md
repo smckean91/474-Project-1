@@ -18,27 +18,29 @@ such that 𝑎≺𝑏 ⇒ 𝐶(𝑎) < 𝐶(𝑏). Two examples of logical clock
 After that we will discuss if, given values how to detect whether a process has a correct or incorrect execution. Both aspects are important for the two algorithms that you have to design and implement. Let P be some process in the N-node distributed network. We need to calculate the LC-value for all the events that P encounters.
 We will reword the definition of the Lamport logical clock to make it more recursive. Let a be some event encountered by P.
 
-1. If a is the first event and is an internal or send event, then LC(a) = 1.
+1. If a is the first event and is an internal or send event, then LC( a ) = 1.
 
-2. If a is the first event and is a receive event, then LC(a) = k + 1 where k is the LC-value of the send event corresponding to a (that has occurred at a process other than P).
+2. If a is the first event and is a receive event, then LC ( a ) = k + 1 where k is the LC-value of the send event corresponding to a (that has occurred at a process other than P).
 
-3. If a is not the first event and is an internal or send event, then LC( a ) = k + 1 where k is the LC-value of the event just before a at process P.
+3. If a is not the first event and is an internal or send event, then LC ( a ) = k + 1 where k is the LC-value of the event just before a at process P.
 
 4. If a is not the first event and is a receive event, let b be the send event corresponding to a (that has occurred at a process other than P) and k be the clock value of the event just before a at process P. Then
-LC(a) = max{ k, LC(b) } + 1
+LC ( a ) = max{ k , LC ( b ) } + 1
 
 In class we worked the following example, with N=3:
 
 Consider three processes and the following sequence of events at processes p0, p1, p2:
-p0 : a s1 r3 b
-p1 : c r2 s3
-p2 : r1 d s2 e
+
+-    p0 : a s1 r3 b
+-    p1 : c r2 s3
+-    p2 : r1 d s2 e
 
 Here s i and r i are corresponding send and receive events, for i = 1,2,3
 Lamport’s logical clock values are:
-p0 : 1 2 8 9
-p1 : 1 6 7
-p2 : 3 4 5 6
+
+-    p0 : 1 2 8 9
+-    p1 : 1 6 7
+-    p2 : 3 4 5 6
 
 ### Algorithm Calculate
 Problem: You are given a number N of no more than 5 processes and a matrix of N rows and M columns
@@ -55,13 +57,15 @@ represents the maximum number of events at a process and you can assume that M i
 
 - null if the process is done executing, case in which the string associated with it is the NULL string. Your algorithm needs to calculate the LC-value for each of the events. So the output will be a NxM matrix with positive integer values. If a process has less than M events, the rest of the entries in the matrix until the column M will be filled with 0. For the example considered in class and presented above, the input to the algorithm is N=3, M=4, and the
 matrix of events is:
-a s1 r3 b
-c r2 s3 NULL
-r1 d s2 e
-The output is:
-1 2 8 9
-1 6 7 0
-3 4 5 6
+
+    - a s1 r3 b
+    - c r2 s3 NULL
+    - r1 d s2 e
+-   The output is:
+
+    - 1 2 8 9 
+    - 1 6 7 0
+    - 3 4 5 6
 
 ## Algorithm Verify
 ___
@@ -73,29 +77,33 @@ will be filled with 0. The number of processes N is not fixed but you can assume
 the message “INCORRECT” if there is an incorrect execution, i.e. at least one process has an incorrect execution.
 
 -   Example 1: For the example considered in class and presented above, the input to the algorithm is N=3, M=4, and the matrix of LC-values is
-1 2 8 9
-1 6 7 0
-3 4 5 6
 
-The output is the matrix of events:
-a s1 r3 b
-c r2 s3 NULL
-r1 d s2 e
+    - 1 2 8 9
+    - 1 6 7 0
+    - 3 4 5 6
 
--   Example 2: Consider the input to be N=3, M=4 and the matrix of LC-values is
-1 2 8 9
-1 6 7 0
-2 3 4 5
-The output is:
-s1 b r3 e
-a r2 s3 NULL
-r1 c d s2
-Example 3: Consider the input to be N=3, M=4 and the matrix of LC-values is
-1 2 8 9
-1 6 7 0
-2 4 5 6
-The output is “INCORRECT”.
-Because process p2 does not have a correct execution. The second value on the third row cannot be 4.
+-   The output is the matrix of events:
+    - a s1 r3 b
+    - c r2 s3 NULL
+    - r1 d s2 e
+
+-   Example 2: Consider the input to be N=3,M=4 and the matrix of LC-values is
+    - 1 2 8 9
+    - 1 6 7 0
+    - 2 3 4 5
+
+-   The output is:
+    - s1 b r3 e
+    - a r2 s3 NULL
+    - r1 c d s2
+
+-   Example 3: Consider the input to be N=3, M=4 and the matrix of LC-values is
+
+    - 1 2 8 9
+    - 1 6 7 0
+    - 2 4 5 6
+
+-   The output is “INCORRECT”. Because process p2 does not have a correct execution. The second value on the third row cannot be 4.
 
 ### Requirements
 ___
