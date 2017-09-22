@@ -42,6 +42,9 @@ Lamport’s logical clock values are:
 -    p1 : 1 6 7
 -    p2 : 3 4 5 6
 
+## Requirements
+___
+
 ### Algorithm Calculate
 Problem: You are given a number N of no more than 5 processes and a matrix of N rows and M columns
 where each element of the matrix is a string. Each row represents the sequence of events at a process:
@@ -105,9 +108,6 @@ the message “INCORRECT” if there is an incorrect execution, i.e. at least on
 
 -   The output is “INCORRECT”. Because process p2 does not have a correct execution. The second value on the third row cannot be 4.
 
-### Requirements
-___
 
-
-### Instructions
+## Instructions
 ___
