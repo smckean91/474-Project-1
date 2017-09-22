@@ -107,7 +107,3 @@ the message “INCORRECT” if there is an incorrect execution, i.e. at least on
     - 2 4 5 6
 
 -   The output is “INCORRECT”. Because process p2 does not have a correct execution. The second value on the third row cannot be 4.
-
-
-## Instructions
-___
