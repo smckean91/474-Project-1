@@ -17,7 +17,7 @@ class Process:
     # Set functions
     def set_Message(self, message):
         self.__message = message
-    
+
     def set_Time(self,time_Stamp):
         self.__time_Stamp = time_Stamp
 
@@ -30,15 +30,15 @@ class Process:
 
 
 # This function will help us increment the clock counter in a
-# a process locally before each event and send its payload to reciever. 
+# a process locally before each event and send its payload to reciever.
 
 
 # In this function, will deal with processing the message and
-# update the counter 
+# update the counter
 
 
 def main():
-    # Create 3 processes    
+    # Create 3 processes
     P1 = Process(" ", 0)
     P2 = Process(" ", 0)
     P3 = Process(" ", 0)
@@ -46,8 +46,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-
-
-
