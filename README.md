@@ -2,8 +2,7 @@
 
 ## Introduction
 ___
-For this project, we are tasked to designed two algorithms related to Lamport’s logical clock. One is to calculate the logical clock values for the events at each of the N processes. The second algorithm will then detect whether an execution is correct given the logical clock values for events at all processes. For simplification,we assume that the network is fully connected so there are no intermediate nodes for any
-transmission. Efficiency of the algorithms is not a big concern for this project. However, our goal is to terminate within 60 minutes if N=3 and M=4 for each run of the program.
+For this project, we are tasked to designed two algorithms related to Lamport’s logical clock. One is to calculate the logical clock values for the events at each of the N processes. The second algorithm will then detect whether an execution is correct given the logical clock values for events at all processes. For simplification,we assume that the network is fully connected so there are no intermediate nodes for any transmission. Efficiency of the algorithms is not a big concern for this project. However, our goal is to terminate within 60 minutes if N=3 and M=4 for each run of the program.
 
 Given a distributed system with N processes, each process goes through a finite number of events. The events could be internal or send or receive. We assume that broadcast is a send event with more than two receive events. In a correct execution of the (entire) distributed system:
 
@@ -18,14 +17,14 @@ such that 𝑎≺𝑏 ⇒ 𝐶(𝑎) < 𝐶(𝑏). Two examples of logical clock
 After that we will discuss if, given values how to detect whether a process has a correct or incorrect execution. Both aspects are important for the two algorithms that you have to design and implement. Let P be some process in the N-node distributed network. We need to calculate the LC-value for all the events that P encounters.
 We will reword the definition of the Lamport logical clock to make it more recursive. Let a be some event encountered by P.
 
-1. If a is the first event and is an internal or send event, then LC( a ) = 1.
+1. If a is the first event and is an internal or send event, then LC ( a ) = 1.
 
 2. If a is the first event and is a receive event, then LC ( a ) = k + 1 where k is the LC-value of the send event corresponding to a (that has occurred at a process other than P).
 
 3. If a is not the first event and is an internal or send event, then LC ( a ) = k + 1 where k is the LC-value of the event just before a at process P.
 
 4. If a is not the first event and is a receive event, let b be the send event corresponding to a (that has occurred at a process other than P) and k be the clock value of the event just before a at process P. Then
-LC ( a ) = max{ k , LC ( b ) } + 1
+LC ( a ) = max { k , LC ( b ) } + 1
 
 In class we worked the following example, with N=3:
 
@@ -66,13 +65,13 @@ matrix of events is:
     - r1 d s2 e
 -   The output is:
 
-    - 1 2 8 9 
+    - 1 2 8 9
     - 1 6 7 0
     - 3 4 5 6
 
 ## Algorithm Verify
 ___
-Problem: You are given a number N of no more than 5 processes, a positive value M and a matrix of N rows and M columns where each element of the matrix is a positive integer in the range 0..24. Each row represents the sequence of LV-values of events at a process: 
+Problem: You are given a number N of no more than 5 processes, a positive value M and a matrix of N rows and M columns where each element of the matrix is a positive integer in the range 0..24. Each row represents the sequence of LV-values of events at a process:
 
 - row 0 is the sequence of LC-values, one
 value for each event at process p0, row 1 is the sequence of LC-values, one value for each event at process p1, etc.. M represents the maximum number of events at a process and you can assume that M is less than 25. If a process has less than M events, the rest of the entries in the matrix until the column M
