@@ -2,7 +2,7 @@
 
 ## Introduction
 ___
-For this project, we are tasked to designed two algorithms related to Lamport’s logical clock. One is to calculate the logical clock values for the events at each of the N processes. The second algorithm will then detect whether an execution is correct given the logical clock values for events at all processes. For simplification, we assume that the network is fully connected so there are no intermediate nodes for any
+For this project, we are tasked to designed two algorithms related to Lamport’s logical clock. One is to calculate the logical clock values for the events at each of the N processes. The second algorithm will then detect whether an execution is correct given the logical clock values for events at all processes. For simplification,we assume that the network is fully connected so there are no intermediate nodes for any
 transmission. Efficiency of the algorithms is not a big concern for this project. However, our goal is to terminate within 60 minutes if N=3 and M=4 for each run of the program.
 
 Given a distributed system with N processes, each process goes through a finite number of events. The events could be internal or send or receive. We assume that broadcast is a send event with more than two receive events. In a correct execution of the (entire) distributed system:
