@@ -61,7 +61,7 @@ class Package:
         #check if corresponding send function is in sARR
         #if so, compare previous object time_Stamp to sARR timestamp and select max
             if('s1' in sARR):
-
+                #compare values here
         elif(self.message == "r2"):
 
         elif(self.message == "r3"):
