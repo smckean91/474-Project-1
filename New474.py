@@ -64,6 +64,7 @@ class Package:
    
     def recV(self):
         global rARR
+        global time
         if(self.message == "r1"):
             if('s1' in sARR):
                self.time_Stamp = max(self.time_Stamp,sARR['s1']) 
@@ -106,13 +107,12 @@ class Package:
     def sendV(self):
         global sARR
         global sFlag
-        if self.message in sARR:
-          
+        if (self.message in sARR and self.time_Stamp < sARR[self.message]):        
             return
         else:
-            sFlag = 1       
-            sARR[self.message] = self.time_Stamp + 1
-        
+            sFlag += 1  
+        sARR[self.message] = self.time_Stamp + 1
+         
 
 #create the board size
 P_board1 = [[Package() for col in range(m)] for row in range(n)]
@@ -162,7 +162,8 @@ def main():
                     time += 1
                     temp_val = e.get_Time()
                     P_board1[i][j].set_Time(e.get_Time())
-     
+       
+
     #outputting timevalues of messages
     for x in range(n):
         print('\n')
