@@ -11,6 +11,9 @@ n = 5
 #number of columns max (max of number of events)
 m = 24
 
+#number of processes max
+p = 9
+
 #global dictionary keeping track of send commands
 sARR = {}
 rARR = {}
@@ -55,6 +58,8 @@ class Package:
 
         elif(self.message[0]== "r"):
             self.recV()
+        elif(self.message== "NULL"):
+            self.time_Stamp = 0
         else:
             self.time_Stamp = time
             # P.time_Stamp = time
@@ -111,24 +116,24 @@ class Package:
             return
         else:
             sFlag += 1  
-        sARR[self.message] = self.time_Stamp + 1
+            sARR[self.message] = self.time_Stamp + 1
          
 
 #create the board size
-P_board1 = [[Package() for col in range(m)] for row in range(n)]
+P_board1 = [[[Package() for col in range(m)] for row in range(n)]for proc in range (p)]
 
 #fixed values for P_board1
-P_board1[0][0].set_Message("a")
-P_board1[0][1].set_Message("s1")
-P_board1[0][2].set_Message("r3")
-P_board1[0][3].set_Message("b")
-P_board1[1][0].set_Message("c")
-P_board1[1][1].set_Message("r2")
-P_board1[1][2].set_Message("s3")
-P_board1[2][0].set_Message("r1")
-P_board1[2][1].set_Message("d")
-P_board1[2][2].set_Message("s2")
-P_board1[2][3].set_Message("e")
+P_board1[0][0][0].set_Message("a")
+P_board1[0][0][1].set_Message("s1")
+P_board1[0][0][2].set_Message("r3")
+P_board1[0][0][3].set_Message("b")
+P_board1[1][0][0].set_Message("c")
+P_board1[1][0][1].set_Message("r2")
+P_board1[1][0][2].set_Message("s3")
+P_board1[2][0][0].set_Message("r1")
+P_board1[2][0][1].set_Message("d")
+P_board1[2][0][2].set_Message("s2")
+P_board1[2][0][3].set_Message("e")
 
 
 
@@ -137,41 +142,62 @@ def main():
     global sARR
     global time
     global sFlag
+
+
+    #get range input from user 
+    p = int(input("Enter a number of processes: "))
+    n = int(input("Enter a number of rows: "))
+    m = int(input("Enter a number of columns: "))
+
+    #get individual message input from user
+    for z in range(p):
+        for x in range(n):
+            for y in range(m):
+                P_board1[z][x][y].message = input("Enter an event Value: ")
+
+
     #printing messages
-    for x in range(n):
+    for z in range(p):
         print('\n')
-        for y in range(m):
-            if (P_board1[x][y].message == "0"):
-                break
-            else:
-                print(P_board1[x][y].message, end = " ")
+        for x in range(n):
+            print('\n')
+            for y in range(m):
+                if (P_board1[z][x][y].message == "0"):
+                    print(P_board1[z][x][y].message, end = " ") 
+                else:
+                    print(P_board1[z][x][y].message, end = " ")
 
 
 
-    #
+    #goes through the array of packages and updates by calling local time
+    #continues to do so if any send functions are read (sFlag)
     while(sFlag > 0):
         sFlag = 0
-        for i in range(n):
-            time = 1
-            for j in range(m):
-                e = P_board1[i][j]
-                if(P_board1[i][j].message == "0"):
-                    break
-                else:
-                    e.local_Count(time);
-                    time += 1
-                    temp_val = e.get_Time()
-                    P_board1[i][j].set_Time(e.get_Time())
+        for k in range(p):
+           
+            for i in range(n): 
+                time = 1              
+                for j in range(m):
+                    e = P_board1[k][i][j]
+                    if(P_board1[k][i][j].message == "0"):
+                        break
+                    else:
+                        e.local_Count(time);
+                        time += 1
+                        temp_val = e.get_Time()
+                        P_board1[k][i][j].set_Time(e.get_Time())
        
 
     #outputting timevalues of messages
-    for x in range(n):
+    for z in range(p):    
         print('\n')
-        for y in range(m):
-            if (P_board1[x][y].message == "0"):
-                break
-            else:
-                print(P_board1[x][y].get_Time(), end = " ")
+        for x in range(n):
+            print('\n')
+            for y in range(m):
+                if (P_board1[z][x][y].message == "0"):
+                    print(P_board1[z][x][y].message, end = " ") 
+                else:
+                    print(P_board1[z][x][y].get_Time(), end = " ")
 
     print(sARR)
     
